@@ -7,3 +7,10 @@
 meteor-platform
 autopublish
 insecure
+accounts-twitter
+accounts-ui
+service-configuration
+meteorhacks:npm
+
+
+npm-container
