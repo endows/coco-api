@@ -7,6 +7,10 @@ if (Meteor.isServer) {
     return user;
   });
 
+  Accounts.onLogin(function(){
+    console.log('onLogin')
+  })
+
 
 
   Meteor.startup(function() {
