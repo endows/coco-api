@@ -1,6 +1,6 @@
 if (Meteor.isServer) {
-  Meteor.startup(function(){
-Future = Npm.require('fibers/future');
+  Meteor.startup(function() {
+    Future = Npm.require('fibers/future');
   })
 
 
@@ -17,15 +17,32 @@ Future = Npm.require('fibers/future');
         access_token_key: ACCESS_TOKEN,
         access_token_secret: ACCESS_TOKEN_SECRET
       });
-      return client.get('friends/ids', {user_id:user_id},  function(error,friendList){
-        console.log(friendList.ids)
-        return friendList.ids
+      return client.get('friends/ids', {
+        user_id: user_id
+      }, function(error, friendList) {
+          // Meteor.call('setMyFriends',user_id,friendList.ids)
+        Meteor.users.update({
+          _id: user_id
+        }, {
+          $set: {
+            friends: "friendList.ids"
+          }
+        }, function(e) {
+          console.log(e)
+          fut['return']("ok");
+        })
       });
-
+      return fut.wait();
     },
-    setMyFriends:function(user_id,friends){
-      console.log(user_id,friends)
-      Meteor.users.update({_id:user_id},{$set:{friends:friends}})
+    setMyFriends: function(user_id, friends) {
+      console.log(user_id, friends)
+      return Meteor.users.update({
+        _id: user_id
+      }, {
+        $set: {
+          friends: friends
+        }
+      })
     }
   })
 }
