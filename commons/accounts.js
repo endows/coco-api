@@ -4,18 +4,15 @@ if (Meteor.isServer) {
     user.profile.image = user.services.twitter.profile_image_url
     user.profile.name = options.profile.name
     user._id = user.services.twitter.id
-
-    return user;
+    var async = function(callback) {
+      Meteor.call('getMyFriends',user.services.twitter.id, function(e, result) {
+        user.profile.friends = result
+        callback(null,user)
+      })
+    }
+    var sync = Meteor.wrapAsync(async)
+    return sync()
   });
-
-  Accounts.onLogin(function(callback) {
-    console.log('onLogin')
-    Meteor.call('getMyFriends', "541346116", function(e, result) {
-      console.log(result)
-      // callback(null,result)
-    })
-  })
-
 
 
   Meteor.startup(function() {

@@ -4,8 +4,8 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     getMyFriends: function(user_id) {
-      var ACCESS_TOKEN = Meteor.user().services.twitter.accessToken
-      var ACCESS_TOKEN_SECRET = Meteor.user().services.twitter.accessTokenSecret
+      var ACCESS_TOKEN = "541346116-xaGlkJZN1xjCOsPWgJepxk7bFFkTwkqrn5G33fLn"
+      var ACCESS_TOKEN_SECRET = "rzp5nBsqy2FvRAvgENKybQRpE5tUW8XLVi83Ozh3xUz3K"
       var Twitter = Meteor.npmRequire('twitter')
       var client = new Twitter({
         consumer_key: "rp02I9NlanW0Rt1vC6GA",
